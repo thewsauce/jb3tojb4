@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    input, button { padding: 0.5em; font-size: 1em; }
+    .link-output { margin-top: 1em; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>URL Generator</h1>
+  <p>Enter a number format (e.g., 11-2222 or 11-22222):</p>
+  <input type="text" id="numberInput" placeholder="XX-YYYY or XX-YYYYY" />
+  <button onclick="generateAndOpenLink()">Generate and Open Link</button>
+
+  <script>
+    function generateAndOpenLink() {
+      const input = document.getElementById('numberInput').value;
+      const formatPattern = /^(\d{2})-(\d{4,5})$/;
+      const match = input.match(formatPattern);
+
+      if (!match) {
+        alert("Invalid format. Please use XX-YYYY or XX-YYYYY.");
+        return;
+      }
+
+      const part1 = match[1];
+      const part2 = match[2];
+      const suffix = part2.length === 4 ? "SP" : "DG";
+      const url = `http://example.link/${part1}-${part2}-${suffix}`;
+
+      // Open the URL in a new tab and switch focus to it
+      const newTab = window.open(url, '_blank');
+      if (newTab) {
+        newTab.focus();
+      } else {
+        alert("Pop-up blocked! Please allow pop-ups for this site.");
+      }
+    }
+  </script>
+</body>
+</html>
